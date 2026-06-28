@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render,redirect,get_object_or_404
 
 from blogs.models import Blog, Category
+from django.db.models import Q
 
 
 def post_by_category(request,category_id):
@@ -21,3 +22,17 @@ def post_by_category(request,category_id):
     
 
     return render(request,'post_by_category.html',context)
+def blogs(request,slug):
+    single_blog = get_object_or_404(Blog,slug=slug, status='published')
+    context={
+        'single_blog' : single_blog,
+    }
+    return render(request,'blogs.html',context)
+
+def search(request):
+    keyword = request.GET.get('keyword')
+    blog = Blog.objects.filter( Q(title__icontains = keyword) | Q(short_description=keyword) | Q(blog_body=keyword) , status='published') 
+    context = {
+        'blog' : blog
+    }
+    return render(request,'search.html',context)
