@@ -36,3 +36,5 @@ def search(request):
         'blog' : blog
     }
     return render(request,'search.html',context)
+
+

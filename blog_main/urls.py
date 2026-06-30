@@ -20,7 +20,7 @@ Including another URLconf
 
 from os import name
 
-from .views import home
+from .views import home , register,login ,logout
 from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
@@ -31,6 +31,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home,name="home" ),
     path('category/' , include('blogs.urls')),
-    path('<slug:slug>/' , blogviews.blogs, name= 'blogs'),
-    path('blog/search' , blogviews.search  , name = 'search')
+    path('blog/<slug:slug>/' , blogviews.blogs, name= 'blogs'),
+    path('blog/search' , blogviews.search  , name = 'search'),
+    path('register/' , register, name= 'register'),
+    path('login/', login , name='login'),
+    path('logout' , logout , name='logout' ),
 ]+ static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
